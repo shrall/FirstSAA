@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.main.student.StudentAdapter">
+    tools:context=".ui.main.course.CourseAdapter">
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/studentAdapterCV"
+        android:id="@+id/courseAdapterCV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,14 +21,14 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/studentAdapterUserIcon"
+                android:id="@+id/courseAdapterUserIcon"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_account_box_black_24dp" />
+                app:srcCompat="@drawable/ic_baseline_menu_book_24" />
 
             <View
                 android:id="@+id/divider"
@@ -38,84 +38,69 @@
                 android:background="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/studentAdapterUserIcon" />
+                app:layout_constraintTop_toBottomOf="@+id/courseAdapterUserIcon" />
 
             <TextView
-                android:id="@+id/studentAdapterName"
+                android:id="@+id/courseAdapterName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/studentAdapterUserIcon"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/courseAdapterUserIcon"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/studentAdapterNIM"
+                android:id="@+id/courseAdapterLecturer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="TextView"
-                app:layout_constraintStart_toEndOf="@+id/studentAdapterUserIcon"
-                app:layout_constraintTop_toBottomOf="@+id/studentAdapterName" />
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintStart_toEndOf="@+id/courseAdapterUserIcon"
+                app:layout_constraintTop_toBottomOf="@+id/courseAdapterName" />
 
             <TextView
-                android:id="@+id/studentAdapterEmail"
+                android:id="@+id/labelSchedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="TextView"
+                android:layout_marginTop="8dp"
+                android:text="Schedule"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider" />
 
             <TextView
-                android:id="@+id/studentAdapterGender"
+                android:id="@+id/courseAdapterSchedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="TextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/studentAdapterEmail" />
-
-            <TextView
-                android:id="@+id/studentAdapterAge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="TextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/studentAdapterGender" />
-
-            <TextView
-                android:id="@+id/studentAdapterAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/studentAdapterAge" />
+                app:layout_constraintTop_toBottomOf="@+id/labelSchedule" />
 
             <ImageView
-                android:id="@+id/studentAdapterEditButton"
+                android:id="@+id/courseAdapterEditButton"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_save"
                 android:padding="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/studentAdapterDeleteButton"
+                app:layout_constraintEnd_toStartOf="@+id/courseAdapterDeleteButton"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
                 app:srcCompat="@drawable/ic_baseline_edit_24" />
 
             <ImageView
-                android:id="@+id/studentAdapterDeleteButton"
+                android:id="@+id/courseAdapterDeleteButton"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginEnd="24dp"

@@ -1,4 +1,4 @@
-package com.example.firstsaa;
+package com.example.firstsaa.ui.main.student;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +18,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.firstsaa.R;
 import com.example.firstsaa.model.Student;
+import com.example.firstsaa.ui.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -33,17 +35,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class StudentRegister extends AppCompatActivity {
-    private Toolbar registerStudentToolbar;
-    private EditText registerStudentName;
-    private EditText registerStudentNIM;
-    private EditText registerStudentEmail;
-    private EditText registerStudentPassword;
-    private EditText registerStudentAge;
-    private EditText registerStudentAddress;
-    private RadioGroup registerStudentGender;
+    @BindView(R.id.registerStudentToolbar)
+    Toolbar registerStudentToolbar;
+    @BindView(R.id.registerStudentName)
+    EditText registerStudentName;
+    @BindView(R.id.registerStudentNIM)
+    EditText registerStudentNIM;
+    @BindView(R.id.registerStudentEmail)
+    EditText registerStudentEmail;
+    @BindView(R.id.registerStudentPassword)
+    EditText registerStudentPassword;
+    @BindView(R.id.registerStudentAge)
+    EditText registerStudentAge;
+    @BindView(R.id.registerStudentAddress)
+    EditText registerStudentAddress;
+    @BindView(R.id.registerStudentGender)
+    RadioGroup registerStudentGender;
+    @BindView(R.id.registerButton)
+    Button registerButton;
     private RadioButton registerStudentRB;
-    private Button registerButton;
     String sUID = "", sName = "", sNIM = "", sEmail = "", sPassword = "", sGender = "", sAge = "", sAddress = "", action = "";
     Student student;
     private DatabaseReference mDatabase;
@@ -55,8 +69,8 @@ public class StudentRegister extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_register);
+        ButterKnife.bind(this);
 
-        registerStudentToolbar = findViewById(R.id.registerStudentToolbar);
         setSupportActionBar(registerStudentToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -64,12 +78,6 @@ public class StudentRegister extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        registerStudentName = findViewById(R.id.registerStudentName);
-        registerStudentNIM = findViewById(R.id.registerStudentNIM);
-        registerStudentEmail = findViewById(R.id.registerStudentEmail);
-        registerStudentPassword = findViewById(R.id.registerStudentPassword);
-        registerStudentAge = findViewById(R.id.registerStudentAge);
-        registerStudentAddress = findViewById(R.id.registerStudentAddress);
 
         registerStudentName.addTextChangedListener(theTextWatcher);
         registerStudentNIM.addTextChangedListener(theTextWatcher);
@@ -79,9 +87,6 @@ public class StudentRegister extends AppCompatActivity {
         registerStudentAddress.addTextChangedListener(theTextWatcher);
 
 
-        registerButton = findViewById(R.id.registerButton);
-
-        registerStudentGender = findViewById(R.id.registerStudentGender);
         registerStudentGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -130,7 +135,6 @@ public class StudentRegister extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     getFormValue();
-
                     Map<String, Object> params = new HashMap<>();
                     params.put("name", sName);
                     params.put("address", sAddress);
@@ -171,8 +175,7 @@ public class StudentRegister extends AppCompatActivity {
                                     Toast.makeText(StudentRegister.this, "Student register successful", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(StudentRegister.this, StudentData.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(StudentRegister.this);
-                                    startActivity(intent, options.toBundle());
+                                    startActivity(intent);
                                     finish();
                                 }
                             });
@@ -202,18 +205,15 @@ public class StudentRegister extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            Intent intent;
-            intent = new Intent(StudentRegister.this, MainActivity.class);
+            Intent intent = new Intent(StudentRegister.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(StudentRegister.this);
-            startActivity(intent, options.toBundle());
+            startActivity(intent);
             finish();
             return true;
         } else if (id == R.id.student_list) {
             Intent intent = new Intent(StudentRegister.this, StudentData.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(StudentRegister.this);
-            startActivity(intent, options.toBundle());
+            startActivity(intent);
             finish();
             return true;
         }
@@ -254,11 +254,9 @@ public class StudentRegister extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent;
-        intent = new Intent(StudentRegister.this, MainActivity.class);
+        Intent intent= new Intent(StudentRegister.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(StudentRegister.this);
-        startActivity(intent, options.toBundle());
+        startActivity(intent);
         finish();
     }
 }

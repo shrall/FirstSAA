@@ -1,4 +1,4 @@
-package com.example.firstsaa;
+package com.example.firstsaa.ui.main.lecturer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,14 +6,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 
-import com.example.firstsaa.adapter.LecturerAdapter;
+import com.example.firstsaa.R;
 import com.example.firstsaa.model.Lecturer;
 import com.example.firstsaa.utils.ItemClickSupport;
 import com.google.firebase.database.DataSnapshot;
@@ -24,19 +22,25 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LecturerData extends AppCompatActivity {
 
-    AlphaAnimation klik = new AlphaAnimation(1F, 0.6F);
+
+    @BindView(R.id.lecturerDataToolbar)
     Toolbar tb;
+    @BindView(R.id.lecturerDataRV)
+    RecyclerView lecturerDataRV;
+
     DatabaseReference dbLecturer;
     ArrayList<Lecturer> listLecturer = new ArrayList<>();
-    RecyclerView lecturerDataRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecturer_data);
-        tb = findViewById(R.id.lecturerDataToolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(tb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -74,13 +78,11 @@ public class LecturerData extends AppCompatActivity {
         ItemClickSupport.addTo(lecturerDataRV).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
-                v.startAnimation(klik);
                 Intent intent = new Intent(LecturerData.this, LecturerDetail.class);
                 Lecturer lecturer = new Lecturer(list.get(position).getId(),list.get(position).getName(), list.get(position).getGender(), list.get(position).getExpertise());
                 intent.putExtra("data_lecturer", lecturer);
                 intent.putExtra("position", position);
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LecturerData.this);
-                startActivity(intent, options.toBundle());
+                startActivity(intent);
                 finish();
                 return false;
             }
@@ -94,11 +96,20 @@ public class LecturerData extends AppCompatActivity {
             Intent intent = new Intent(LecturerData.this, AddLecturer.class);
             intent.putExtra("action", "add");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LecturerData.this);
-            startActivity(intent, options.toBundle());
+            startActivity(intent);
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(LecturerData.this, AddLecturer.class);
+        intent.putExtra("action", "add");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }

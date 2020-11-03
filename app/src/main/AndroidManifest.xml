@@ -9,19 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".adapter.StudentAdapter"></activity>
-        <activity android:name=".StudentData" />
-        <activity android:name=".StudentArea" />
-        <activity android:name=".LecturerDetail" />
-        <activity android:name=".adapter.LecturerAdapter" />
-        <activity android:name=".LecturerData" />
-        <activity android:name=".UserMain" />
-        <activity android:name=".AddCourse" />
-        <activity android:name=".AddLecturer" />
-        <activity android:name=".LoginStudent" />
-        <activity android:name=".StudentRegister" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".ui.main.course.CourseData"></activity>
+        <activity android:name=".ui.main.student.StudentAdapter" />
+        <activity android:name=".ui.main.student.StudentData" />
+        <activity android:name=".ui.main.student.StudentArea" />
+        <activity android:name=".ui.main.lecturer.LecturerDetail" />
+        <activity android:name=".ui.main.lecturer.LecturerAdapter" />
+        <activity android:name=".ui.main.lecturer.LecturerData" />
+        <activity android:name=".ui.main.course.AddCourse" />
+        <activity android:name=".ui.main.lecturer.AddLecturer" />
+        <activity android:name=".ui.main.student.LoginStudent" />
+        <activity android:name=".ui.main.student.StudentRegister" />
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.splash.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

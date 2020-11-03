@@ -4,39 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserMain">
-
+    tools:context=".ui.main.course.CourseData">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/UserToolbar"
-        android:layout_width="420dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="1dp"
+        android:id="@+id/courseDataToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/user"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@string/course_list"
         app:titleTextColor="#FFFFFF" />
 
-
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/userFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="64dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:backgroundTint="@color/colorPrimary"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/courseDataRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="50dp"
-        app:srcCompat="@drawable/ic_book_black_24dp" />
-<!--        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"-->
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseDataToolbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

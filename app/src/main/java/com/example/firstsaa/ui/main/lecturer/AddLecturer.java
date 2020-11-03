@@ -1,17 +1,14 @@
-package com.example.firstsaa;
+package com.example.firstsaa.ui.main.lecturer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
-
-import com.example.firstsaa.R;
 
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +18,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.firstsaa.R;
 import com.example.firstsaa.model.Lecturer;
+import com.example.firstsaa.ui.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -30,14 +29,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class AddLecturer extends AppCompatActivity {
 
-    EditText addLecturerNameInput, addLecturerExpertiseInput;
-    RadioButton radioButton;
+
+    @BindView(R.id.addLecturerName)
+    EditText addLecturerNameInput;
+    @BindView(R.id.addLecturerExpertise)
+    EditText addLecturerExpertiseInput;
+    @BindView(R.id.addLecturerGender)
     RadioGroup addLecturerGenderRG;
-    String addLecturerName="", addLecturerExpertise="", addLecturerGender="male", action = "";
+    @BindView(R.id.addLecturerButton)
     Button addLecturerButton;
+    @BindView(R.id.addLecturerToolbar)
     Toolbar addLecturerTB;
+    RadioButton radioButton;
+    String addLecturerName="", addLecturerExpertise="", addLecturerGender="male", action = "";
     Lecturer lecturer;
     private DatabaseReference mDatabase;
 
@@ -45,20 +54,16 @@ public class AddLecturer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lecturer);
+        ButterKnife.bind(this);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        addLecturerTB = findViewById(R.id.addLecturerToolbar);
         setSupportActionBar(addLecturerTB);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        addLecturerExpertiseInput = findViewById(R.id.addLecturerExpertise);
-        addLecturerNameInput = findViewById(R.id.addLecturerName);
         addLecturerNameInput.addTextChangedListener(theTextWatcher);
         addLecturerExpertiseInput.addTextChangedListener(theTextWatcher);
-
-        addLecturerButton = findViewById(R.id.addLecturerButton);
-        addLecturerGenderRG = findViewById(R.id.addLecturerGender);
 
         addLecturerGenderRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -91,7 +96,6 @@ public class AddLecturer extends AppCompatActivity {
                 }
             });
         } else{
-
             getSupportActionBar().setTitle("Edit Lecturer");
             lecturer = intent.getParcelableExtra("edit_data_lect");
             addLecturerNameInput.setText(lecturer.getName());
@@ -109,7 +113,6 @@ public class AddLecturer extends AppCompatActivity {
                     addLecturerName = addLecturerNameInput.getEditableText().toString().trim();
                     addLecturerExpertise = addLecturerExpertiseInput.getEditableText().toString().trim();
                     addLecturerGender = radioButton.getText().toString();
-
                     Map<String,Object> params = new HashMap<>();
                     params.put("name", addLecturerName);
                     params.put("expertise", addLecturerExpertise);
@@ -120,8 +123,7 @@ public class AddLecturer extends AppCompatActivity {
                             Intent intent;
                             intent = new Intent(AddLecturer.this, LecturerData.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AddLecturer.this);
-                            startActivity(intent, options.toBundle());
+                            startActivity(intent);
                             finish();
                         }
                     });
@@ -186,15 +188,13 @@ public class AddLecturer extends AppCompatActivity {
         if (id == android.R.id.home) {
             Intent intent = new Intent(AddLecturer.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AddLecturer.this);
-            startActivity(intent, options.toBundle());
+            startActivity(intent);
             finish();
             return true;
         } else if (id == R.id.lecturer_list) {
             Intent intent = new Intent(AddLecturer.this, LecturerData.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AddLecturer.this);
-            startActivity(intent, options.toBundle());
+            startActivity(intent);
             finish();
             return true;
         }
@@ -203,11 +203,9 @@ public class AddLecturer extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent;
-        intent = new Intent(AddLecturer.this, MainActivity.class);
+        Intent intent = new Intent(AddLecturer.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AddLecturer.this);
-        startActivity(intent, options.toBundle());
+        startActivity(intent);
         finish();
     }
 }

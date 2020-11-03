@@ -1,4 +1,4 @@
-package com.example.firstsaa;
+package com.example.firstsaa.ui.main.student;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,17 +6,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.firstsaa.model.Student;
+import com.example.firstsaa.R;
+import com.example.firstsaa.ui.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,12 +26,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LoginStudent extends AppCompatActivity {
 
+
+    @BindView(R.id.loginStudentToolbar)
     Toolbar loginStudentToolbar;
-    EditText loginStudentEmailInput, loginStudentPasswordInput;
-    String loginStudentEmail, loginStudentPassword;
+    @BindView(R.id.loginStudentEmail)
+    EditText loginStudentEmailInput;
+    @BindView(R.id.loginStudentPassword)
+    EditText loginStudentPasswordInput;
+    @BindView(R.id.loginStudentButton)
     Button loginStudentButton;
+
+    String loginStudentEmail, loginStudentPassword;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -39,8 +49,8 @@ public class LoginStudent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_student);
+        ButterKnife.bind(this);
 
-        loginStudentToolbar = findViewById(R.id.loginStudentToolbar);
         setSupportActionBar(loginStudentToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -50,13 +60,10 @@ public class LoginStudent extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference("student");
 
 
-        loginStudentEmailInput = findViewById(R.id.loginStudentEmail);
-        loginStudentPasswordInput = findViewById(R.id.loginStudentPassword);
 
         loginStudentEmailInput.addTextChangedListener(theTextWatcher);
         loginStudentPasswordInput.addTextChangedListener(theTextWatcher);
 
-        loginStudentButton = findViewById(R.id.loginStudentButton);
 
         loginStudentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,4 +124,27 @@ public class LoginStudent extends AppCompatActivity {
 
         }
     };
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            Intent intent = new Intent(LoginStudent.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(LoginStudent.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
 }

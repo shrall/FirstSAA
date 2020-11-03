@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#EAEEEF"
     android:backgroundTint="#eaeeef"
-    tools:context=".ScheduleFragment">
+    tools:context=".ui.main.student.schedule.ScheduleFragment">
 
     <ImageView
         android:id="@+id/imageView"

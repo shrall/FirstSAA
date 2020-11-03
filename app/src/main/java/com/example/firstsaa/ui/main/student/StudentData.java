@@ -1,4 +1,4 @@
-package com.example.firstsaa;
+package com.example.firstsaa.ui.main.student;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,14 +10,11 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.AlphaAnimation;
 
-import com.example.firstsaa.adapter.LecturerAdapter;
-import com.example.firstsaa.adapter.StudentAdapter;
-import com.example.firstsaa.model.Lecturer;
+import com.example.firstsaa.R;
 import com.example.firstsaa.model.Student;
-import com.example.firstsaa.utils.ItemClickSupport;
+import com.example.firstsaa.ui.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,24 +23,26 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class StudentData extends AppCompatActivity {
-    AlphaAnimation klik = new AlphaAnimation(1F, 0.6F);
+    @BindView(R.id.studentDataToolbar)
     Toolbar tb;
+    @BindView(R.id.studentDataRV)
+    RecyclerView studentDataRV;
     DatabaseReference dbStudent;
     ArrayList<Student> listStudent = new ArrayList<>();
-    RecyclerView studentDataRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_data);
-        tb = findViewById(R.id.studentDataToolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(tb);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         dbStudent = FirebaseDatabase.getInstance().getReference("student");
-        studentDataRV = findViewById(R.id.studentDataRV);
-
         showStudentData();
     }
 
@@ -72,9 +71,6 @@ public class StudentData extends AppCompatActivity {
         StudentAdapter studentAdapter = new StudentAdapter(StudentData.this);
         studentAdapter.setListStudent(list);
         studentDataRV.setAdapter(studentAdapter);
-
-
-
     }
 
     @Override
@@ -84,11 +80,19 @@ public class StudentData extends AppCompatActivity {
             Intent intent = new Intent(StudentData.this, StudentRegister.class);
             intent.putExtra("action", "add");
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(StudentData.this);
-            startActivity(intent, options.toBundle());
+            startActivity(intent);
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(StudentData.this, StudentRegister.class);
+        intent.putExtra("action", "add");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }

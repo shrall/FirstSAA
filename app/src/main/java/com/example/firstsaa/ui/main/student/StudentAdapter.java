@@ -1,4 +1,4 @@
-package com.example.firstsaa.adapter;
+package com.example.firstsaa.ui.main.student;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.firstsaa.R;
-import com.example.firstsaa.StudentData;
-import com.example.firstsaa.StudentRegister;
 import com.example.firstsaa.model.Student;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -140,10 +138,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CardView
 
         CardViewViewHolder(View itemView) {
             super(itemView);
-            lbl_name = itemView.findViewById(R.id.studentAdapterName);
-            lbl_gender = itemView.findViewById(R.id.studentAdapterGender);
-            lbl_nim = itemView.findViewById(R.id.studentAdapterNIM);
-            lbl_email = itemView.findViewById(R.id.studentAdapterEmail);
+            lbl_name = itemView.findViewById(R.id.courseAdapterName);
+            lbl_gender = itemView.findViewById(R.id.courseAdapterSchedule);
+            lbl_nim = itemView.findViewById(R.id.courseAdapterLecturer);
+            lbl_email = itemView.findViewById(R.id.labelSchedule);
             lbl_age = itemView.findViewById(R.id.studentAdapterAge);
             lbl_address = itemView.findViewById(R.id.studentAdapterAddress);
             btn_edit = itemView.findViewById(R.id.studentAdapterEditButton);

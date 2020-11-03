@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="8dp"
-    tools:context=".adapter.LecturerAdapter">
+    tools:context=".ui.main.lecturer.LecturerAdapter">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/lecturerAdapterCV"

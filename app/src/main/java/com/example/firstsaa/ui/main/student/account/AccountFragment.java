@@ -1,5 +1,6 @@
-package com.example.firstsaa;
+package com.example.firstsaa.ui.main.student.account;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,14 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.firstsaa.R;
 import com.example.firstsaa.model.Student;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.firstsaa.ui.MainActivity;
+import com.example.firstsaa.ui.main.student.StudentRegister;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,11 +50,12 @@ public class AccountFragment extends Fragment {
         dbStudent.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
+                if (snapshot.exists()) {
                     student = snapshot.getValue(Student.class);
                     setData();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -63,7 +63,7 @@ public class AccountFragment extends Fragment {
         });
     }
 
-    public void setData(){
+    public void setData() {
         text_fname.setText(student.getName());
         text_email.setText(student.getEmail());
         text_nim.setText(student.getNim());
@@ -85,10 +85,10 @@ public class AccountFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         text_fname = getView().findViewById(R.id.studentFragmentName);
-        text_email =  getView().findViewById(R.id.studentFragmentEmail);
-        text_nim =  getView().findViewById(R.id.studentFragmentNIM);
+        text_email = getView().findViewById(R.id.studentFragmentEmail);
+        text_nim = getView().findViewById(R.id.studentFragmentNIM);
         text_gender = getView().findViewById(R.id.studentFragmentGender);
-        text_age =  getView().findViewById(R.id.studentFragmentAge);
+        text_age = getView().findViewById(R.id.studentFragmentAge);
         text_address = getView().findViewById(R.id.studentFragmentAddress);
 
         btnLogout = view.findViewById(R.id.studentFragmentLogoutButton);
@@ -97,30 +97,29 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(v.getContext())
-                    .setTitle("Konfirmasi")
-                    .setIcon(R.drawable.ic_logo_logomark)
-                    .setMessage("Are you sure you want to logout?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(final DialogInterface dialogInterface, int i) {
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    FirebaseAuth.getInstance().signOut();
-                                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                                    startActivity(intent);
-                                }
-                            }, 2000);
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .create()
-                    .show();
+                        .setTitle("Konfirmasi")
+                        .setIcon(R.drawable.ic_logo_logomark)
+                        .setMessage("Are you sure you want to logout?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialogInterface, int i) {
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                getActivity().finish();
+                                startActivity(intent);
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .create()
+                        .show();
             }
         });
     }
