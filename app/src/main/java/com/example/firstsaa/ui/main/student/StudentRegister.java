@@ -125,7 +125,7 @@ public class StudentRegister extends AppCompatActivity {
             registerStudentEmail.setText(student.getEmail());
             if (student.getGender().equalsIgnoreCase("male")) {
                 registerStudentGender.check(R.id.registerStudentMale);
-            } else{
+            } else {
                 registerStudentGender.check(R.id.registerStudentFemale);
             }
             registerStudentAge.setText(student.getAge());
@@ -147,10 +147,18 @@ public class StudentRegister extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Intent intent;
-                            intent = new Intent(StudentRegister.this, StudentData.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
+                            if (getIntent().getStringExtra("source").equalsIgnoreCase("userAccount")) {
+                                intent = new Intent(StudentRegister.this, StudentArea.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                intent = new Intent(StudentRegister.this, StudentData.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+
+                            }
                         }
                     });
                 }
@@ -254,7 +262,7 @@ public class StudentRegister extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent= new Intent(StudentRegister.this, MainActivity.class);
+        Intent intent = new Intent(StudentRegister.this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

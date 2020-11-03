@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.firstsaa.R;
 import com.example.firstsaa.model.Student;
 import com.example.firstsaa.ui.MainActivity;
+import com.example.firstsaa.ui.main.student.StudentData;
 import com.example.firstsaa.ui.main.student.StudentRegister;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,14 +30,31 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class AccountFragment extends Fragment {
 
+    @BindView(R.id.studentFragmentEditButton)
+    Button btnEdit;
+    @BindView(R.id.studentFragmentLogoutButton)
     Button btnLogout;
-    Dialog dialog;
+    @BindView(R.id.studentFragmentName)
+    TextView text_fname;
+    @BindView(R.id.studentFragmentEmail)
+    TextView text_email;
+    @BindView(R.id.studentFragmentNIM)
+    TextView text_nim;
+    @BindView(R.id.studentFragmentGender)
+    TextView text_gender;
+    @BindView(R.id.studentFragmentAge)
+    TextView text_age;
+    @BindView(R.id.studentFragmentAddress)
+    TextView text_address;
     Student student;
-    TextView text_fname, text_email, text_nim, text_gender, text_age, text_address;
-    DatabaseReference dbStudent;
-    FirebaseAuth firebaseAuth;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    DatabaseReference dbStudent = FirebaseDatabase.getInstance().getReference("student").child(firebaseAuth.getCurrentUser().getUid());
+    ;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -45,8 +63,6 @@ public class AccountFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        firebaseAuth = FirebaseAuth.getInstance();
-        dbStudent = FirebaseDatabase.getInstance().getReference("student").child(firebaseAuth.getCurrentUser().getUid());
         dbStudent.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -83,15 +99,21 @@ public class AccountFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
-        text_fname = getView().findViewById(R.id.studentFragmentName);
-        text_email = getView().findViewById(R.id.studentFragmentEmail);
-        text_nim = getView().findViewById(R.id.studentFragmentNIM);
-        text_gender = getView().findViewById(R.id.studentFragmentGender);
-        text_age = getView().findViewById(R.id.studentFragmentAge);
-        text_address = getView().findViewById(R.id.studentFragmentAddress);
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), StudentRegister.class);
+                intent.putExtra("data_student", student);
+                intent.putExtra("action", "edit");
+                intent.putExtra("source", "userAccount");
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
-        btnLogout = view.findViewById(R.id.studentFragmentLogoutButton);
         btnLogout.setOnClickListener(new View.OnClickListener() {
 
             @Override

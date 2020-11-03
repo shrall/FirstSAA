@@ -298,5 +298,7 @@
     <string name="edit_course">Edit Course</string>
     <string name="enroll">Enroll</string>
     <string name="remove">Remove</string>
+    <string name="logout">logout</string>
+    <string name="edit_account">Edit Account</string>
 
 </resources>
