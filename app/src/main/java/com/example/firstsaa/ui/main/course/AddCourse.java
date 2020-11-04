@@ -210,11 +210,11 @@ public class AddCourse extends AppCompatActivity {
                                 int checkCoursesDataStart = Integer.parseInt(course.getStart().replace(":", ""));
                                 int checkCoursesDataEnd = Integer.parseInt(course.getEnd().replace(":", ""));
 
-                                if (courseStart >= checkCoursesDataStart && courseStart <= checkCoursesDataEnd) {
+                                if (courseStart >= checkCoursesDataStart && courseStart < checkCoursesDataEnd) {
                                     checkOverlap.setValue(true);
                                     break;
                                 }
-                                if (courseEnd >= checkCoursesDataStart && courseEnd <= checkCoursesDataEnd) {
+                                if (courseEnd > checkCoursesDataStart && courseEnd <= checkCoursesDataEnd) {
                                     checkOverlap.setValue(true);
                                     break;
                                 }

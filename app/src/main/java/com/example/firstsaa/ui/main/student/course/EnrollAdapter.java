@@ -148,11 +148,11 @@ public class EnrollAdapter extends RecyclerView.Adapter<EnrollAdapter.CardViewVi
                             if (selectedCourse.getDay().equals(course.getDay())) {
                                 int checkCoursesDataStart = Integer.parseInt(course.getStart().replace(":", ""));
                                 int checkCoursesDataEnd = Integer.parseInt(course.getEnd().replace(":", ""));
-                                if (selectedCourseStart >= checkCoursesDataStart && selectedCourseStart <= checkCoursesDataEnd) {
+                                if (selectedCourseStart >= checkCoursesDataStart && selectedCourseStart < checkCoursesDataEnd) {
                                     checkOverlap.setValue(true);
                                     break;
                                 }
-                                if (selectedCourseEnd >= checkCoursesDataStart && selectedCourseEnd <= checkCoursesDataEnd) {
+                                if (selectedCourseEnd > checkCoursesDataStart && selectedCourseEnd <= checkCoursesDataEnd) {
                                     checkOverlap.setValue(true);
                                     break;
                                 }

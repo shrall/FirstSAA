@@ -29,28 +29,30 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CardViewViewHolder>{
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CardViewViewHolder> {
 
     private Context context;
     private ArrayList<Student> listStudent;
+
     private ArrayList<Student> getListStudent() {
         return listStudent;
     }
+
     public void setListStudent(ArrayList<Student> listStudent) {
         this.listStudent = listStudent;
     }
+
     public StudentAdapter(Context context) {
         this.context = context;
     }
-    DatabaseReference dbStudent;
-    private FirebaseAuth mAuth;
+
+    DatabaseReference dbStudent = FirebaseDatabase.getInstance().getReference("student");
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @NonNull
     @Override
     public StudentAdapter.CardViewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_adapter, parent, false);
-        dbStudent = FirebaseDatabase.getInstance().getReference("student");
-        mAuth = FirebaseAuth.getInstance();
         return new StudentAdapter.CardViewViewHolder(view);
     }
 
@@ -69,7 +71,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CardView
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), StudentRegister.class);
-                Student students = new Student(student.getUid(), student.getEmail(),student.getPassword(),student.getName(),student.getNim(),student.getGender(),student.getAge(),student.getAddress());
+                Student students = new Student(student.getUid(), student.getEmail(), student.getPassword(), student.getName(), student.getNim(), student.getGender(), student.getAge(), student.getAddress());
                 intent.putExtra("data_student", students);
                 intent.putExtra("position", position);
                 intent.putExtra("action", "edit");
@@ -82,7 +84,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CardView
                 new AlertDialog.Builder(view.getContext())
                         .setTitle("Konfirmasi")
                         .setIcon(R.drawable.ic_logo_logomark)
-                        .setMessage("Are you sure to delete "+student.getName()+"'s data?")
+                        .setMessage("Are you sure to delete " + student.getName() + "'s data?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
@@ -91,7 +93,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CardView
                                     @Override
                                     public void run() {
                                         String uid = student.getUid();
-                                        mAuth.signInWithEmailAndPassword(student.getEmail(),student.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        mAuth.signInWithEmailAndPassword(student.getEmail(), student.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 mAuth.getCurrentUser().delete();
@@ -122,9 +124,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CardView
         });
 
 
-
-
-
     }
 
     @Override
@@ -132,16 +131,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CardView
         return getListStudent().size();
     }
 
-    class CardViewViewHolder extends RecyclerView.ViewHolder{
+    class CardViewViewHolder extends RecyclerView.ViewHolder {
         TextView lbl_name, lbl_gender, lbl_nim, lbl_email, lbl_age, lbl_address;
         ImageView btn_edit, btn_del;
 
         CardViewViewHolder(View itemView) {
             super(itemView);
-            lbl_name = itemView.findViewById(R.id.courseAdapterName);
-            lbl_gender = itemView.findViewById(R.id.courseAdapterSchedule);
-            lbl_nim = itemView.findViewById(R.id.courseAdapterLecturer);
-            lbl_email = itemView.findViewById(R.id.labelSchedule);
+            lbl_name = itemView.findViewById(R.id.studentAdapterName);
+            lbl_gender = itemView.findViewById(R.id.studentAdapterGender);
+            lbl_nim = itemView.findViewById(R.id.studentAdapterNIM);
+            lbl_email = itemView.findViewById(R.id.studentAdapterEmail);
             lbl_age = itemView.findViewById(R.id.studentAdapterAge);
             lbl_address = itemView.findViewById(R.id.studentAdapterAddress);
             btn_edit = itemView.findViewById(R.id.studentAdapterEditButton);

@@ -15,16 +15,19 @@ import com.example.firstsaa.model.Lecturer;
 
 import java.util.ArrayList;
 
-public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.CardViewViewHolder>{
+public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.CardViewViewHolder> {
 
     private Context context;
     private ArrayList<Lecturer> listLecturer;
+
     private ArrayList<Lecturer> getListLecturer() {
         return listLecturer;
     }
+
     public void setListLecturer(ArrayList<Lecturer> listLecturer) {
         this.listLecturer = listLecturer;
     }
+
     public LecturerAdapter(Context context) {
         this.context = context;
     }
@@ -50,7 +53,7 @@ public class LecturerAdapter extends RecyclerView.Adapter<LecturerAdapter.CardVi
         return getListLecturer().size();
     }
 
-    class CardViewViewHolder extends RecyclerView.ViewHolder{
+    class CardViewViewHolder extends RecyclerView.ViewHolder {
         TextView lbl_name, lbl_gender, lbl_expertise;
 
         CardViewViewHolder(View itemView) {

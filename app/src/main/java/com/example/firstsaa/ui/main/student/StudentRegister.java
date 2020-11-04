@@ -164,8 +164,6 @@ public class StudentRegister extends AppCompatActivity {
                 }
             });
         }
-
-
     }
 
     public void addStudent() {
