@@ -89,28 +89,22 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.CardView
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialogInterface, int i) {
-                                new Handler().postDelayed(new Runnable() {
+                                mAuth.signInWithEmailAndPassword(student.getEmail(), student.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
-                                    public void run() {
-                                        String uid = student.getUid();
-                                        mAuth.signInWithEmailAndPassword(student.getEmail(), student.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        mAuth.getCurrentUser().delete();
+                                        dbStudent.child(student.getUid()).removeValue(new DatabaseReference.CompletionListener() {
                                             @Override
-                                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                                mAuth.getCurrentUser().delete();
-                                                dbStudent.child(student.getUid()).removeValue(new DatabaseReference.CompletionListener() {
-                                                    @Override
-                                                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                                        Intent in = new Intent(view.getContext(), StudentData.class);
-                                                        in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                        Toast.makeText(view.getContext(), "Delete success!", Toast.LENGTH_SHORT).show();
-                                                        context.startActivity(in);
-                                                        dialogInterface.cancel();
-                                                    }
-                                                });
+                                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                                Intent in = new Intent(view.getContext(), StudentData.class);
+                                                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                Toast.makeText(view.getContext(), "Delete success!", Toast.LENGTH_SHORT).show();
+                                                context.startActivity(in);
+                                                dialogInterface.cancel();
                                             }
                                         });
                                     }
-                                }, 2000);
+                                });
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
